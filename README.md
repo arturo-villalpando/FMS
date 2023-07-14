@@ -1,6 +1,10 @@
 # FMS
 Fastapi + Masonite ORM (PostgreSQL) + Strawberry
 
+# Install requirements
+
+pip install -r requirements.txt
+
 # Migrations
 
 masonite-orm migrate -d app/databases/migrations
