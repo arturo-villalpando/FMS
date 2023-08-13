@@ -1,5 +1,4 @@
 """MigrationForFaqCategoryTable Migration."""
-
 from masoniteorm.migrations import Migration
 
 
@@ -12,8 +11,8 @@ class MigrationForFaqCategoryTable(Migration):
             table.increments("id")
             table.jsonb("category")
 
+            table.soft_deletes()
             table.timestamps()
-            table.timestamp("deleted_at").nullable()
 
     def down(self):
         """

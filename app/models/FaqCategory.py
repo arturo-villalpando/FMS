@@ -1,21 +1,12 @@
-""" FaqCategory Model """
-
-import json
-
+""" faqs Model """
 from masoniteorm.models import Model
-from masoniteorm.relationships import has_many
+from masoniteorm.scopes import SoftDeletesMixin
 
 
-class FaqCategory(Model):
-    """FaqCategory Model"""
+class FaqCategory(Model, SoftDeletesMixin):
+    """Faqs Categories Model"""
     __table__ = "faqs_categories"
 
-    __guarded__ = ["id"]
-
-    __dates__ = ["deleted_at"]
+    __fillable__ = ["category"]
 
     __cast__ = {"category": "json"}
-
-    @has_many("id", "category_id")
-    def posts(self):
-        from .Faq import Faq
