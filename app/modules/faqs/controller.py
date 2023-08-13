@@ -1,12 +1,12 @@
 from typing import List
 import json
 # Models
-from app.models.Faq import Faq
+from models.Faq import Faq
 # Schemas
 from app.modules.faqs.schema import FaqType, FaqCreate, FaqUpdate
 # Queries
-from .queries import get_all_faqs, get_all_active_faqs, \
-    get_faq_by_id, get_active_faq_by_id
+from .queries import get_all_active_faqs, \
+    get_faq_by_id
 from app.modules.faqs_categories.queries import get_faq_category_by_id
 # Helpers
 from app.helpers.cleaner import json_cleaner_faqs

@@ -1,11 +1,11 @@
 from typing import List
 import json
 # Models
-from app.models.FaqCategory import FaqCategory
+from models.FaqCategory import FaqCategory
 # Schemas
 from app.modules.faqs_categories.schema import FaqCategoryType, FaqCategoryCreate, FaqCategoryUpdate
 # Queries
-from .queries import get_all_faq_categories, get_all_active_faq_categories, \
+from .queries import get_all_active_faq_categories, \
     get_faq_category_by_id, get_active_faq_category_by_id, \
     exists_faq_category_by_name, exists_faq_category_by_name_id
 # Helpers

@@ -1,5 +1,5 @@
 # Models
-from app.models.Faq import Faq
+from models.Faq import Faq
 # Builder
 from masoniteorm.query import QueryBuilder
 # Errors
