@@ -1,5 +1,5 @@
 # FMS
-Multilang Faq System with Fastapi + Masonite ORM (PostgreSQL) + Strawberry
+Multilang Faq System with Fastapi (Python) + Masonite ORM (PostgreSQL) + Strawberry (GraphQL)
 
 # Install requirements
 
