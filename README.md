@@ -19,9 +19,9 @@ python main.py
 
 # Note
 
-The api is not finished, I used to learn how works a JSON field with Fastapi + Masonite ORM (PostgreSQL) + Strawberry
+The api is not finished, I used to learn how work a multi lang faq system with JSON field
 
-# Create a Faq Category
+# First create a Faq Category
 ```json
 mutation CreateFaqCategory {
     createFaqCategory(
@@ -36,7 +36,7 @@ mutation CreateFaqCategory {
 }
 ```
 
-# Create a Faq
+# Second create a Faq
 ```json
 mutation CreateFaq {
     createFaq(
