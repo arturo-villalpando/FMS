@@ -6,7 +6,7 @@ from models.Faq import Faq
 from app.modules.faqs.schema import FaqType, FaqCreate, FaqUpdate
 # Queries
 from .queries import get_all_active_faqs, \
-    get_faq_by_id
+    get_faq_by_id, get_active_faq_by_id
 from app.modules.faqs_categories.queries import get_faq_category_by_id
 # Helpers
 from app.helpers.cleaner import json_cleaner_faqs
@@ -20,19 +20,11 @@ from http import HTTPStatus
 
 class Queries:
     def get_all_faqs(self) -> List[FaqType]:
-        try:
-            return get_all_active_faqs()
-        except Exception as e:
-            custom_graphql_error(
-                message="Error getting faq",
-                code=e.errors(),
-                status=HTTPStatus.BAD_REQUEST
-            )
-
+        return get_all_active_faqs()
 
     def get_faq(self, id: int) -> FaqType:
         # Here we need to validate the use role, to check if has access to this endpoint (get_faq_category_by_id)...
-        return get_faq_by_id(id)
+        return get_active_faq_by_id(id)
 
 
 class Mutations:

@@ -9,27 +9,32 @@ from http import HTTPStatus
 
 
 def get_all_faqs():
-    try:
-        return Faq.with_({
-            'category': lambda q: q.with_trashed(),
-        }).get()
-    except QueryException as e:
+    faqs = Faq.with_({'category': lambda q: q.with_trashed()}).get()
+    if not faqs or faqs is None:
         custom_graphql_error(
-            message="Error trying to get faq",
-            code=e.__cause__,
-            status=HTTPStatus.BAD_REQUEST
+            message="Faqs not found",
+            code="200",
+            status=HTTPStatus.NOT_FOUND
         )
+    return faqs
 
 
 def get_all_active_faqs():
     builder = QueryBuilder(model=Faq)
     try:
-        return builder.statement(
+        faqs = builder.statement(
             "SELECT * FROM faqs f \
                 JOIN  faqs_categories fc ON fc.id = f.category_id \
                 WHERE \
                 f.deleted_at IS NULL AND fc.deleted_at IS NULL;"
         )
+        if not faqs or faqs is None:
+            custom_graphql_error(
+                message="Faqs not found",
+                code="200",
+                status=HTTPStatus.NOT_FOUND
+            )
+        return faqs
     except QueryException as e:
         custom_graphql_error(
             message="Error trying to get faq",
@@ -39,25 +44,37 @@ def get_all_active_faqs():
 
 
 def get_faq_by_id(id: int):
-    faq = Faq.with_({
-        'category': lambda q: q.with_trashed(),
-    }).find(id)
-    if not faq:
+    faq = Faq.with_({'category': lambda q: q.with_trashed()}).find(id)
+    if not faq or faq is None:
         custom_graphql_error(
             message="Faq not found",
             code="",
             status=HTTPStatus.NOT_FOUND
         )
+
     return faq
 
 
 def get_active_faq_by_id(id: int):
-    faq = Faq.find(id)
-    if not faq:
+    builder = QueryBuilder(model=Faq)
+    try:
+        faq = builder.statement(
+            "SELECT * FROM faqs f \
+                JOIN  faqs_categories fc ON fc.id = f.category_id \
+                WHERE \
+                f.id = '?' AND f.deleted_at IS NULL AND fc.deleted_at IS NULL;"
+        , [id])
+        faq = Faq.find(id)
+        if not faq or faq is None:
+            custom_graphql_error(
+                message="Faq not found",
+                code="",
+                status=HTTPStatus.NOT_FOUND
+            )
+        return faq
+    except QueryException as e:
         custom_graphql_error(
-            message="Faq not found",
-            code="",
-            status=HTTPStatus.NOT_FOUND
+            message="Error trying to get faq",
+            code=e.__cause__,
+            status=HTTPStatus.BAD_REQUEST
         )
-
-    return faq

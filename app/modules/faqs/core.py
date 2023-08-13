@@ -17,4 +17,4 @@ class Mutation:
 @strawberry.type
 class Query:
     faqs: Optional[List[FaqType]] = strawberry.field(resolver=Queries.get_all_faqs)
-    faq: FaqType = strawberry.field(resolver=Queries.get_faq)
+    faq: Optional[FaqType] = strawberry.field(resolver=Queries.get_faq)
