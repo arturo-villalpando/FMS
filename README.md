@@ -17,6 +17,10 @@ config/database.py
 
 python main.py
 
+# URL
+
+http://localhost:8000/api
+
 # Note
 
 The api is not finished, I used to learn how work a multi lang faq system with JSON field
