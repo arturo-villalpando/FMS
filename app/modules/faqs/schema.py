@@ -12,9 +12,15 @@ class FaqType:
     id: int
     category: FaqCategoryType
     faq: JSON
+    visits: int
     created_at: datetime
     updated_at: datetime
     deleted_at: Optional[datetime] = None
+
+
+@strawberry.type
+class FaqVisits:
+    message: str = "Visits updated."
 
 
 @strawberry.input

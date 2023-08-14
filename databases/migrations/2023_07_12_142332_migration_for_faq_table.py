@@ -12,6 +12,7 @@ class MigrationForFaqTable(Migration):
             table.integer("category_id").unsigned()
             table.foreign("category_id").references("id").on("faqs_categories")
             table.jsonb("faq")
+            table.integer("visits").default(0)
 
             table.soft_deletes()
             table.timestamps()

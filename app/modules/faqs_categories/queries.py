@@ -7,6 +7,7 @@ from app.errors.custom import custom_graphql_error
 from http import HTTPStatus
 
 
+# Multiple Results
 def get_all_faq_categories():
     return FaqCategory.with_trashed().all()
 
@@ -15,12 +16,13 @@ def get_all_active_faq_categories():
     return FaqCategory.all()
 
 
+# Single Results
 def get_faq_category_by_id(id: int):
     faq_category = FaqCategory.with_trashed().find(id)
     if not faq_category:
         custom_graphql_error(
             message="Faq category not found",
-            code="",
+            code="Not Found!",
             status=HTTPStatus.NOT_FOUND
         )
     return faq_category
@@ -31,13 +33,14 @@ def get_active_faq_category_by_id(id: int):
     if not faq_category:
         custom_graphql_error(
             message="Faq category not found",
-            code="",
+            code="Not Found!",
             status=HTTPStatus.NOT_FOUND
         )
 
     return faq_category
 
 
+# Validations Results
 def exists_faq_category_by_name(category: dict):
     builder = QueryBuilder(model=FaqCategory)
     for cat in category:
@@ -47,7 +50,7 @@ def exists_faq_category_by_name(category: dict):
         if faq_category is not None:
             custom_graphql_error(
                 message="Faq category '" + cat['name'] + "' already exists",
-                code="",
+                code="Not Found!",
                 status=HTTPStatus.FOUND
             )
     return True
@@ -63,7 +66,7 @@ def exists_faq_category_by_name_id(id: int, category: dict):
         if search_faq_category is not None:
             custom_graphql_error(
                 message="Faq category '" + cat['name'] + "' already exists",
-                code="",
+                code="Not Found!",
                 status=HTTPStatus.FOUND
             )
     return True

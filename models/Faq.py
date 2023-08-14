@@ -7,7 +7,7 @@ class Faq(Model, SoftDeletesMixin):
     """Faq Model"""
     __table__ = "faqs"
 
-    __fillable__ = ["category_id","faq"]
+    __fillable__ = ["category_id", "faq"]
 
     __casts__ = {"faq": "json"}
 

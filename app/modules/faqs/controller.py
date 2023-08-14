@@ -3,10 +3,12 @@ import json
 # Models
 from models.Faq import Faq
 # Schemas
-from app.modules.faqs.schema import FaqType, FaqCreate, FaqUpdate
+from app.modules.faqs.schema import FaqType, FaqCreate, FaqUpdate, FaqVisits
 # Queries
-from .queries import get_all_active_faqs, \
-    get_faq_by_id, get_active_faq_by_id
+from .queries import get_all_faqs, get_all_active_faqs, \
+    get_faq_by_id, get_active_faq_by_id, \
+    get_faqs_by_categories, get_top_faqs, \
+    update_stats
 from app.modules.faqs_categories.queries import get_faq_category_by_id
 # Helpers
 from app.helpers.cleaner import json_cleaner_faqs
@@ -19,12 +21,21 @@ from http import HTTPStatus
 
 
 class Queries:
-    def get_all_faqs(self) -> List[FaqType]:
-        return get_all_active_faqs()
+    # Multiple results
+    def get_all_faqs(self, order:str='created_at', direction:str='desc') -> List[FaqType]:
+        return get_all_faqs(order, direction)
 
+    def get_all_faqs_by_category(self, category_id: int):
+        return get_faqs_by_categories(category_id)
+
+    def get_top_faqs(self):
+        return get_top_faqs()
+
+    # Single results
     def get_faq(self, id: int) -> FaqType:
         # Here we need to validate the use role, to check if has access to this endpoint (get_faq_category_by_id)...
         return get_active_faq_by_id(id)
+
 
 
 class Mutations:
@@ -87,3 +98,8 @@ class Mutations:
                 status=HTTPStatus.BAD_REQUEST
             )
         return faq
+
+    def visits_faq(self, id: int) -> FaqVisits:
+        update_stats(id)
+
+        return FaqVisits
